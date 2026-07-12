@@ -199,7 +199,7 @@ p{ margin: 0 0 var(--sp-4); color: var(--color-ink-soft); }
 
 /* ---------- 6. Hero ---------- */
 .hero{
-  position: relative; min-height: 92vh; display: flex; align-items: flex-end;
+  position: relative; min-height: 92vh; min-height: 92dvh; display: flex; align-items: flex-end;
   padding-top: var(--header-h); overflow: hidden;
   background: var(--ph-bg, var(--grad-maroon));
 }
@@ -244,6 +244,21 @@ p{ margin: 0 0 var(--sp-4); color: var(--color-ink-soft); }
 }
 .search-field select:focus, .search-field input:focus{ outline: none; border-color: var(--color-gold); }
 .search-card .btn{ height: 48px; }
+
+/* ---- Filter bars (venues / vendors listing filters) ----
+   Previously these were inline `style="grid-template-columns:..."` on the
+   page, which meant they were invisible to every breakpoint below and broke
+   (squashed into unreadable slivers) on tablet and mobile. Moved to real
+   classes so responsive.css can actually target them. */
+.filter-grid{ gap: var(--sp-4); align-items: end; }
+.filter-grid-5{ grid-template-columns: repeat(4, 1fr) auto; }
+.filter-grid-2{ grid-template-columns: 1fr 2fr; }
+
+/* ---- Two-column content layout (contact page: form + info) ---- */
+.contact-grid{ grid-template-columns: 1.1fr 0.9fr; gap: var(--sp-8); align-items: start; }
+
+/* ---- Media / gallery grids (gallery page + homepage preview) ---- */
+.gallery-grid{ grid-template-columns: repeat(4, 1fr); }
 
 /* ---------- 8. Signature divider — "toran" (marigold garland) ---------- */
 .divider-toran{
@@ -396,7 +411,7 @@ textarea.form-control{ resize: vertical; min-height: 120px; }
 .checkbox-row input{ margin-top: 4px; accent-color: var(--color-maroon); }
 
 .auth-shell{
-  min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 100vh; min-height: 100dvh; display: grid; grid-template-columns: 1fr 1fr;
 }
 .auth-visual{ background: var(--grad-maroon); position: relative; color: #FBEFE1; display: flex; flex-direction: column; justify-content: center; padding: var(--sp-8); overflow: hidden; }
 .auth-visual::before{ content:""; position:absolute; inset:0; opacity:0.15; background-image: radial-gradient(circle, rgba(255,255,255,0.6) 1.5px, transparent 1.5px); background-size: 26px 26px; }

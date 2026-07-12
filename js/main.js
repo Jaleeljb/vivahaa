@@ -44,6 +44,7 @@ const Vivaha = (() => {
     <div class="mobile-drawer" id="mobileDrawer">
       <button class="drawer-close" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
       <nav aria-label="Mobile">${links}
+        <a href="dashboard.html?tab=wishlist" data-i18n="dashboard.nav.wishlist"></a>
         <a href="dashboard.html" class="auth-only" style="display:none" data-i18n="nav.dashboard"></a>
         <a href="login.html" class="guest-only" data-i18n="nav.login"></a>
         <a href="register.html" class="guest-only" data-i18n="nav.register"></a>
