@@ -38,7 +38,9 @@ const Vivaha = (() => {
         <a href="dashboard.html" class="icon-btn auth-only" style="display:none" aria-label="Dashboard"><i class="fa-solid fa-gauge"></i></a>
         <a href="login.html" class="btn btn-outline btn-sm guest-only" data-i18n="nav.login"></a>
         <a href="planner.html" class="btn btn-gold btn-sm" data-i18n="nav.planMyWedding"></a>
-        <button class="nav-toggle" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileDrawer">
+          <span class="hamburger"><span></span><span></span><span></span></span>
+        </button>
       </div>
     </div>
     <div class="mobile-drawer" id="mobileDrawer">
@@ -141,9 +143,28 @@ const Vivaha = (() => {
     const drawer = document.getElementById("mobileDrawer");
     const closeBtn = document.querySelector(".drawer-close");
     if (toggle && drawer) {
-      toggle.addEventListener("click", () => drawer.classList.add("is-open"));
-      closeBtn?.addEventListener("click", () => drawer.classList.remove("is-open"));
-      drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", () => drawer.classList.remove("is-open")));
+      const isOpen = () => drawer.classList.contains("is-open");
+      const openDrawer = () => {
+        drawer.classList.add("is-open");
+        toggle.classList.add("is-active");
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.setAttribute("aria-label", "Close menu");
+        document.body.classList.add("drawer-open");
+      };
+      const closeDrawer = () => {
+        drawer.classList.remove("is-open");
+        toggle.classList.remove("is-active");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", "Open menu");
+        document.body.classList.remove("drawer-open");
+      };
+      toggle.addEventListener("click", () => (isOpen() ? closeDrawer() : openDrawer()));
+      closeBtn?.addEventListener("click", closeDrawer);
+      // Tapping the drawer's own empty space (not a link/button inside it) dismisses it too.
+      drawer.addEventListener("click", (e) => { if (e.target === drawer) closeDrawer(); });
+      drawer.querySelectorAll("a").forEach(a => a.addEventListener("click", closeDrawer));
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape" && isOpen()) closeDrawer(); });
+      window.addEventListener("resize", () => { if (window.innerWidth > 992 && isOpen()) closeDrawer(); });
     }
 
     document.querySelectorAll(".theme-toggle").forEach(btn => {
